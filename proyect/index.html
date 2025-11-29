@@ -1,0 +1,1594 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="imagenes/ixc.avif" type="image/x-icon">
+    <title>ENERGIAS RENOVABLES</title>
+
+    <link rel="stylesheet" href="negrain.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: rgb(101, 238, 238);
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        /* Menú fijo */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(135deg, #2c5530, #4a7c59);
+            padding: 1rem 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(44, 85, 48, 0.35);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            white-space: nowrap;
+        }
+
+        .nav-menu a:hover {
+            color: #a8d5a8;
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-menu-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .mobile-menu-toggle:active {
+            transform: scale(0.95);
+        }
+
+        /* Overlay para menú móvil */
+        .menu-overlay {
+            display: none;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            height: calc(100vh - 70px);
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .menu-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        @media (min-width: 769px) {
+            .menu-overlay {
+                display: none !important;
+            }
+        }
+
+        /* Contenido principal */
+        .main-content {
+            margin-top: 80px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+                        url('imagenes/energy.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 2rem 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                background-attachment: scroll;
+                min-height: 70vh;
+                padding: 1.5rem 1rem;
+            }
+        }
+
+        .hero-content h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero-content p {
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        /* Secciones de contenido */
+        .section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        #R {
+            padding: 4rem 2rem;
+        }
+
+        .section h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #2c5530;
+        }
+
+        .section h3 {
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
+            margin-bottom: 1rem;
+            color: #4a7c59;
+        }
+
+        .section p {
+            font-size: clamp(0.95rem, 2vw, 1.1rem);
+            margin-bottom: 1.5rem;
+            text-align: justify;
+            line-height: 1.8;
+        }
+        .section h4 {
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #4a7c59;
+        }
+        /* Grid de información */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        @media (max-width: 600px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .info-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            will-change: transform;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .info-card:hover {
+                transform: translateY(-5px);
+            }
+        }
+
+        .info-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .info-card img,
+            .recycle-card img {
+                width: 100%;
+                height: auto;
+                max-height: 200px;
+                object-fit: cover;
+            }
+        }
+
+        /* Beneficios del reciclaje */
+        .benefits {
+            background: linear-gradient(135deg, #e8f5e8, #f0f8f0);
+            border-radius: 15px;
+            padding: 3rem;
+            margin: 3rem 0;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 600px) {
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .benefit-item {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .benefit-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Tipos de reciclaje */
+        .recycle-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        @media (max-width: 600px) {
+            .recycle-types {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .recycle-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            will-change: transform;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .recycle-card:hover {
+                transform: translateY(-5px);
+            }
+        }
+
+        .recycle-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .recycle-card-content {
+            padding: 1.5rem;
+        }
+
+        .recycle-card h3 {
+            color: #2c5530;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgb(28, 158, 201);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            position: relative;
+        }
+
+        /* Iframe responsivo */
+        .responsive-iframe {
+            position: relative;
+            width: 100%;
+            max-width: 1150px;
+            margin: 2rem auto;
+            padding-bottom: 52.17%; /* Proporción 600/1150 = 0.5217 */
+            height: 0;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .responsive-iframe iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        
+        @media (max-width: 768px) {
+            .responsive-iframe {
+                margin: 1.5rem auto;
+                padding-bottom: 60%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .responsive-iframe {
+                margin: 1rem auto;
+                padding-bottom: 75%;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .section {
+                padding: 3rem 1.5rem;
+            }
+
+            .nav-container {
+                padding: 0 1.5rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .info-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+
+            .recycle-types {
+                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            }
+
+            .responsive-iframe {
+                padding-bottom: 60%;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .responsive-iframe {
+                padding-bottom: 70%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: rgba(44, 85, 48, 0.98);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                padding-top: 2rem;
+                transition: left 0.3s ease;
+                gap: 0;
+                overflow-y: auto;
+                z-index: 998;
+            }
+
+            .nav-menu li {
+                width: 100%;
+                text-align: center;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .nav-menu a {
+                display: block;
+                padding: 1.2rem 1rem;
+                width: 100%;
+                white-space: normal;
+                font-size: 1.1rem;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+                z-index: 1001;
+            }
+
+            .hero {
+                min-height: 70vh;
+                background-attachment: scroll;
+                padding: 2rem 1rem;
+            }
+
+            .hero-content {
+                padding: 0 1rem;
+                width: 100%;
+            }
+
+            .section {
+                padding: 2rem 1rem;
+            }
+
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .navbar {
+                padding: 0.75rem 0;
+            }
+
+            .main-content {
+                margin-top: 70px;
+            }
+
+            .benefits {
+                padding: 2rem 1.5rem;
+                margin: 2rem 0;
+            }
+
+            .info-card,
+            .recycle-card {
+                padding: 1.5rem;
+                margin-bottom: 1rem;
+            }
+
+            .benefit-item {
+                padding: 1rem;
+            }
+
+            .benefit-icon {
+                font-size: 2.5rem;
+            }
+
+            .info-grid,
+            .benefits-grid,
+            .recycle-types {
+                gap: 1.5rem;
+            }
+            
+            #R {
+                padding: 2rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                min-height: 60vh;
+                padding: 1.5rem 0.5rem;
+            }
+            
+            .hero-content h1 {
+                font-size: clamp(1.5rem, 6vw, 2rem);
+                margin-bottom: 0.75rem;
+            }
+            
+            .hero-content p {
+                font-size: clamp(0.9rem, 3vw, 1.1rem);
+            }
+
+            .info-grid,
+            .benefits-grid,
+            .recycle-types {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .section {
+                padding: 1.5rem 0.75rem;
+            }
+            
+            .section h2 {
+                font-size: clamp(1.5rem, 5vw, 2rem);
+                margin-bottom: 2rem;
+            }
+            
+            .section h3, .section h4 {
+                font-size: clamp(1.1rem, 4vw, 1.5rem);
+            }
+
+            .benefits {
+                padding: 1.5rem 1rem;
+                margin: 2rem 0;
+            }
+
+            .info-card,
+            .recycle-card {
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .info-card img,
+            .recycle-card img {
+                width: 100%;
+                height: auto;
+                max-height: 160px;
+                object-fit: cover;
+            }
+
+            .benefit-icon {
+                font-size: 2rem;
+            }
+
+            .footer {
+                padding: 1.5rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .responsive-iframe {
+                padding-bottom: 75%;
+                margin: 1rem auto;
+            }
+
+            .section p {
+                text-align: left;
+                font-size: clamp(0.9rem, 2.5vw, 1rem);
+            }
+            
+            #R {
+                padding: 1.5rem 0.75rem;
+            }
+        }
+
+        @media (max-width: 375px) {
+            .hero {
+                min-height: 50vh;
+                padding: 1rem 0.5rem;
+            }
+            
+            .hero-content h1 {
+                font-size: clamp(1.3rem, 7vw, 1.8rem);
+            }
+            
+            .hero-content p {
+                font-size: clamp(0.85rem, 3.5vw, 1rem);
+            }
+
+            .section {
+                padding: 1rem 0.5rem;
+            }
+            
+            .section h2 {
+                font-size: clamp(1.3rem, 6vw, 1.8rem);
+                margin-bottom: 1.5rem;
+            }
+
+            .benefits {
+                padding: 1rem 0.75rem;
+                margin: 1.5rem 0;
+            }
+
+            .info-card,
+            .recycle-card {
+                padding: 0.75rem;
+                margin-bottom: 0.75rem;
+            }
+            
+            .info-card img,
+            .recycle-card img {
+                width: 100%;
+                height: auto;
+                max-height: 140px;
+                object-fit: cover;
+            }
+
+            .nav-container {
+                padding: 0 0.75rem;
+            }
+            
+            .responsive-iframe {
+                margin: 0.75rem auto;
+                padding-bottom: 80%;
+            }
+            
+            #R {
+                padding: 1rem 0.5rem;
+            }
+        }
+        /* Animaciones del loader */
+        .loader {
+            display: flex;
+            margin: 0.25em 0;
+            gap: 0.2em;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .dash {
+            animation: dashArray 2s ease-in-out infinite,
+                dashOffset 2s linear infinite;
+        }
+
+        .spin {
+            animation: spinDashArray 2s ease-in-out infinite,
+                spin 8s ease-in-out infinite,
+                dashOffset 2s linear infinite;
+            transform-origin: center;
+        }
+
+        @keyframes dashArray {
+            0% {
+                stroke-dasharray: 0 1 359 0;
+            }
+
+            50% {
+                stroke-dasharray: 0 359 1 0;
+            }
+
+            100% {
+                stroke-dasharray: 359 1 0 0;
+            }
+        }
+
+        @keyframes spinDashArray {
+            0% {
+                stroke-dasharray: 270 90;
+            }
+
+            50% {
+                stroke-dasharray: 0 360;
+            }
+
+            100% {
+                stroke-dasharray: 270 90;
+            }
+        }
+
+        @keyframes dashOffset {
+            0% {
+                stroke-dashoffset: 365;
+            }
+
+            100% {
+                stroke-dashoffset: 5;
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                rotate: 0deg;
+            }
+
+            12.5%,
+            25% {
+                rotate: 270deg;
+            }
+
+            37.5%,
+            50% {
+                rotate: 540deg;
+            }
+
+            62.5%,
+            75% {
+                rotate: 810deg;
+            }
+
+            87.5%,
+            100% {
+                rotate: 1080deg;
+            }
+        }
+
+        #loader-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #000000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        #loader-wrapper.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* Responsividad mejorada para el loader */
+        @media (min-width: 1400px) {
+            .loader svg {
+                height: 56px !important;
+                width: 56px !important;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .loader svg {
+                height: 48px !important;
+                width: 48px !important;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .loader svg {
+                height: 44px !important;
+                width: 44px !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .loader svg {
+                height: 40px !important;
+                width: 40px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .loader svg {
+                height: 36px !important;
+                width: 36px !important;
+            }
+        }
+
+        @media (max-width: 375px) {
+            .loader svg {
+                height: 32px !important;
+                width: 32px !important;
+            }
+        }
+
+        @media (max-width: 320px) {
+            .loader svg {
+                height: 28px !important;
+                width: 28px !important;
+            }
+        }
+
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .button-group button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    font-size: 16px;
+    border: none;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    border-radius: 10px;
+    width: 150px;
+    transition: transform 0.2s ease;
+  }
+
+  .button-group button:hover {
+    transform: scale(1.05);
+    background-color: #e0e0e0;
+  }
+
+    .button-group .icono {
+        width: clamp(40px, 6vw, 60px);
+        height: auto;
+        margin-bottom: 10px;
+    }
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s ease forwards;
+    }
+
+    @keyframes fadeInUp{
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    .dropdown {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: clamp(12px, 3vw, 20px);
+      background-color: #f0f0f0;
+      padding: 10px;
+      border: 1px solid #ccc;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      z-index: 2;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: clamp(8px, 2vw, 12px);
+      max-width: min(600px, 90vw);
+      box-sizing: border-box;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+   
+.dropdown-content {
+  display: none;
+  position: static;
+  background-color: transparent;
+  box-shadow: none;
+  z-index: 1;
+  flex-direction: row;
+  align-items: center;
+  gap: clamp(6px, 2vw, 10px);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+        .dropdown-content a {
+          color: black;
+          padding: clamp(6px, 1.5vw, 10px) clamp(10px, 2vw, 14px);
+          text-decoration: none;
+          display: inline-flex;
+          align-items: center;
+          gap: clamp(4px, 1.5vw, 6px);
+          background-color: #ffffff;
+          border: 1px solid #ddd;
+          border-radius: 20px;
+          white-space: nowrap;
+        }
+
+    .dropdown-content a img {
+          width: clamp(16px, 4vw, 20px);
+          height: clamp(16px, 4vw, 20px);
+        }
+        .media-section {
+          margin-top: 2rem;
+        }
+        .media-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          gap: 1.5rem;
+          align-items: start;
+        }
+        .media-item {
+          background: #ffffff;
+          border-radius: 10px;
+          box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+          padding: 1rem;
+        }
+        .frame {
+          border: 4px solid #4a7c59;
+          border-radius: 10px;
+          padding: 8px;
+        }
+        .image-overlay {
+          position: relative;
+          display: inline-block;
+        }
+        .image-overlay img {
+          display: block;
+          width: 100%;
+          height: auto;
+          border-radius: 10px;
+        }
+        .overlay-text {
+          position: absolute;
+          top: 8px;
+          left: 8px;
+          background: rgba(0,0,0,0.6);
+          color: #fff;
+          padding: 6px 10px;
+          border-radius: 6px;
+          font-size: clamp(0.85rem, 2.5vw, 1rem);
+        }
+        .bg-table {
+          width: 100%;
+          border-collapse: collapse;
+          background-image: url('imagenes/energy.jpg');
+          background-size: cover;
+          background-position: center;
+          border-radius: 10px;
+          overflow: hidden;
+        }
+        .bg-table td {
+          padding: 1rem;
+          border: 1px solid rgba(255,255,255,0.6);
+          background: rgba(255,255,255,0.65);
+        }
+        .responsive-media {
+          width: 100%;
+          border-radius: 10px;
+        }
+        .icon {
+          width: clamp(32px, 6vw, 60px);
+          height: auto;
+          display: inline-block;
+        }
+        .table-responsive {
+          width: 100%;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+        }
+        .table-responsive table {
+          width: 100%;
+          min-width: 540px;
+          border-collapse: collapse;
+        }
+        .table-responsive table img {
+          width: clamp(28px, 8vw, 60px);
+          height: auto;
+        }
+        @media (max-width: 480px) {
+          .media-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+
+        .dropdown:hover .dropdown-content { 
+          display: flex;
+        }
+        .dropdown.open .dropdown-content {
+          display: flex;
+        }
+
+        @media (max-width: 768px) {
+          .dropdown {
+            max-width: min(540px, 92vw);
+            gap: 10px;
+          }
+          .dropdown-content {
+            justify-content: center;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .dropdown {
+            position: static;
+            left: auto;
+            transform: none;
+            bottom: auto;
+            margin: 12px auto 0;
+            width: 100%;
+            justify-content: center;
+          }
+          .dropdown-content a {
+            font-size: clamp(12px, 3vw, 14px);
+          }
+        }
+  .dropdown li {
+    margin-bottom: 8px; 
+  }
+
+    .dropdown a {
+        text-decoration: none; 
+        color: #333; 
+        font-size: 14px; 
+        }
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0,0,0,0.6);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+    }
+    .modal-overlay.active {
+        display: flex;
+    }
+    .modal {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        width: min(700px, 92vw);
+        max-height: 85vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+    .modal-header {
+        padding: 1rem 1.25rem;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .modal-title {
+        font-size: clamp(1.1rem, 3vw, 1.4rem);
+        color: #2c5530;
+    }
+    .modal-close {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        line-height: 1;
+    }
+    .modal-body {
+        padding: 1rem 1.25rem;
+        overflow: auto;
+        font-size: clamp(0.95rem, 2vw, 1.1rem);
+        line-height: 1.7;
+    }
+    .modal-iframe {
+        width: 100%;
+        height: 60vh;
+        border: 0;
+        border-radius: 8px;
+        background: #f8f9fa;
+        margin-top: 0.75rem;
+    }
+    @media (max-width: 480px) {
+        .modal-iframe { height: 50vh; }
+    }
+    .modal-footer {
+        padding: 0.75rem 1.25rem;
+        border-top: 1px solid #eee;
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+    }
+    .modal-link {
+        display: inline-block;
+        padding: 0.5rem 0.9rem;
+        background: #4a7c59;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 6px;
+    }
+    .theme-bg-gradient {
+        background: radial-gradient(
+            125% 125% at -2% 101%,
+            rgba(245, 87, 2, 1) 10.5%,
+            rgba(245, 120, 2, 1) 16%,
+            rgba(245, 140, 2, 1) 17.5%,
+            rgba(245, 170, 100, 1) 25%,
+            rgb(135, 217, 240) 40%,
+            rgb(131, 154, 225) 65%,
+            rgb(14, 137, 214) 100%
+        );
+    }
+    .zoom-container {
+  width: 1000px; 
+  height: 600px; 
+  overflow: hidden; 
+  margin: 10px;
+  cursor: pointer; 
+}
+
+.zoom-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+  transition: transform 0.3s ease; 
+}
+
+.zoom-container:hover img {
+  transform: scale(1.2); 
+}
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+table th, table td {
+  padding: 10px;
+  text-align: left;
+}
+table {
+    background-image: url('imagenes/distintas.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+    </style>
+</head>
+<body>
+    <div id="loader-wrapper">
+        <div class="loader">
+            <svg viewBox="0 0 120 120" width="48" height="48">
+                <circle cx="60" cy="60" r="54" fill="none" stroke="#4a7c59" stroke-width="6" class="dash"></circle>
+                <circle cx="60" cy="60" r="40" fill="none" stroke="#2c5530" stroke-width="6" class="spin"></circle>
+            </svg>
+        </div>
+    </div>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#inicio" class="logo">Energías Renovables</a>
+            <button class="mobile-menu-toggle" id="mobile-toggle" aria-label="Abrir menú">☰</button>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#beneficios">Beneficios</a></li>
+                <li><a href="#tipos">Tipos</a></li>
+                <li><a href="#consejos">Recomendaciones</a></li>
+                <li><a href="#R">Proyecto</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content theme-bg-gradient">
+        <section class="hero" id="inicio">
+            <div class="hero-content">
+                <h1>ENERGIAS RENOVABLES: futuro mas sostenible y mejorado</h1>
+                <p>Descubre cómo las energias renovables pueden transformar nuestro mundo y crear un futuro más sostenible para las próximas generaciones.</p>
+            </div>
+        </section>
+
+        <section class="section" id="beneficios">
+            <h2>¿Por qué es Importante las Energias Renovables?</h2>
+            <div class="benefits">
+                <p>Las energias renovables son una de las acciones más importantes que podemos realizar,ya que representan una alternativa limpia y sostenible frente a los combustibles fósiles. Al aprovechar recursos naturales como el sol, el viento, el agua y la biomasa, reducimos la emisión de gases de efecto invernadero y contribuimos a frenar el cambio climático, 
+                    Además, fomentan la independencia energética de los países, generan empleos verdes y promueven la innovación tecnológica. Su implementación no solo protege el medio ambiente, sino que también impulsa el desarrollo económico y social, creando comunidades más resilientes y conscientes de su impacto en el planeta.
+                     Apostar por las energías renovables significa invertir en un futuro más justo, saludable y equilibrado, donde el progreso no esté reñido con el cuidado de la naturaleza.</p>
+                      <h3>breve introduccion</h3>
+                <audio class="responsive-media" controls preload="metadata">
+                    <source src="imagenes/introduc.ogg" type="audio/mpeg">
+                </audio>
+                <section class="fade-in">
+                    <h2 style="text-align: center;">proyecto y datos interesantes</h2>
+                    <div class="button-group">
+                        <button class="topic-btn" data-topic="prototipo" data-page="proyej.html">
+                            <img src="imagenes/prot.jpeg" alt="prototipo" class="icono">
+                            GALERIA DEL PROTOTIPO
+                        </button>
+                        <button class="topic-btn" data-topic="eolica" data-page="https://energiasinlimites.info/donde-hay-campos-de-energia-eolica-en-mexico/">
+                            <img src="imagenes/eolic.jpg" alt="eolica" class="icono">
+                            ENERGIA EOLICA
+                        </button>
+                        <button class="topic-btn" data-topic="solar" data-page="https://energiasinlimites.info/como-se-distribuye-la-energia-solar-en-mexico/#google_vignette">
+                            <img src="imagenes/sol.jpg" alt="solar" class="icono">
+                            ENERGIA SOLAR 
+                        </button>
+                        <button class="topic-btn" data-topic="hidroelectrica" data-page="https://energiasinlimites.info/cuantas-plantas-hidroelectricas-hay-en-mexico/#google_vignette">
+                            <img src="imagenes/hidra.jpg" alt="hidroelectrica" class="icono">
+                            ENERGIA HIDROELECTRICA
+                        </button>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+        <section class="section" id="tipos">
+            <h2>Tipos de Energias Renovables</h2>
+            <div class="recycle-types">
+                <div class="recycle-card">
+                    <img src="imagenes/solar.gif" alt="Reciclaje de plástico">
+                    <div class="recycle-card-content">
+                        <h3>Energia Solar</h3>
+                        <p>La energía solar es la transformación de la luz del sol en energía eléctrica mediante paneles fotovoltaicos. Es una fuente de energía limpia y renovable que se puede instalar en techos, terrenos o en estructuras especiales.</p>
+                    </div>
+                </div>
+                
+                <div class="recycle-card">
+                    <img src="imagenes/R.gif" alt="Reciclaje de papel">
+                    <div class="recycle-card-content">
+                        <h3>Energia Eolica</h3>
+                        <p>La energía eólica es la transformación de la energía cinética del viento en energía eléctrica mediante aerogeneradores. Es una fuente de energía limpia y renovable que se puede instalar en terrenos o en estructuras especiales.</p>
+                    </div>
+                </div>
+                
+                <div class="recycle-card">
+                    
+                        <img src="imagenes/hidro.gif"  alt="Reciclaje de vidrio">
+                    
+                    <div class="recycle-card-content">
+                        <h3>Energia Hidroelectrica</h3>
+                        <p>La energía hidroeléctrica es la transformación de la energía potencial del agua en energía eléctrica mediante turbinas. Es una fuente de energía limpia y renovable que se puede instalar en ríos, embalses o en estructuras especiales.</p>
+                    </div>
+                </div>
+            
+                <div class="recycle-card">
+                    
+                        <img src="imagenes/biogas.jpg" alt="Reciclaje de biomasa" class="responsive-media">
+                    
+                    <div class="recycle-card-content">
+                        <h3>Energia Biomasa</h3>
+                        <p>La energía biomasa es la transformación de la energía potencial de la madera, residuos orgánicos y otros materiales en energía eléctrica mediante motores térmicos. Es una fuente de energía limpia y renovable que se puede instalar en plantas o en estructuras especiales.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section" id="consejos">
+            <h2>recomendaciones para implementar las energias renovables</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <img src="imagenes/pane.jpg" alt="energia solar">
+                    <h3>Implementa las energias renovables en tu hogar</h3>
+                    <p>Instala paneles solares en tu techo o en tu terreno para generar energía eléctrica. También puedes instalar aerogeneradores en tu terreno para generar energía eléctrica.</p>
+                </div>
+                
+                <div class="info-card">
+                    <img src="imagenes/energia-hidraulica.jpg" alt="energia hidraulica">
+                    <h3>Instala turbinas hidroeléctricas en ríos o embalses</h3>
+                    <p>Las turbinas hidroeléctricas son una fuente de energía limpia y renovable que se puede instalar en ríos, embalses o en estructuras especiales.</p>
+                </div>
+                
+                <div class="info-card">
+                    <img src="imagenes/biogas.jpg" alt="energia biomasa">
+                    <h3>Instala motores térmicos en plantas de biomasa</h3>
+                    <p>Los motores térmicos son una fuente de energía limpia y renovable que se puede instalar en plantas de biomasa para generar energía eléctrica.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section" id="R">
+            <h4>PROYECTO DE ENERGIAS RENOVABLES</h4>
+            <div class="responsive-iframe">
+                <iframe src="carrusel.html" frameborder="0" class="giphy-embed" allowfullscreen title="PROYECTO DE ENERGIAS RENOVABLES - Carrusel Interactivo"></iframe>
+            </div>
+        </div>
+        </div>
+        <section class="section">
+            <h2>Impacto de las energias renovables</h2>
+            <div class="benefits">
+                <p>El uso de las energias renovables tiene un impacto significativo en nuestro planeta. Aquí tienes algunos datos importantes:</p>
+                <div class="benefits-grid">
+                    <div class="benefit-item">
+                        <div class="benefit-icon"></div>
+                        <div class="table-responsive">
+                        <table>
+  <caption>Reducción de la contaminación</caption>
+  <thead>
+    <tr>
+      <th>Fuente de energía renovable</th>
+      <th>Impacto ambiental positivo</th>
+      <th>Ejemplo concreto</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Solar</td>
+      <td>No emite CO₂ al generar electricidad</td>
+      <td>
+        <img src="imagenes/pane.jpg" class="icon" alt="Paneles solares">
+      </td>
+    </tr>
+    <tr>
+      <td>Eólica</td>
+      <td>Reduce gases de efecto invernadero</td>
+      <td>
+        <img src="imagenes/eolic.jpg" class="icon" alt="Parques eólicos">
+      </td>
+    </tr>
+    <tr>
+      <td>Hidroeléctrica</td>
+      <td>Disminuye uso de carbón y petróleo</td>
+      <td>
+        <img src="imagenes/hidra.jpg" class="icon" alt="Presas con turbinas limpias">
+      </td>
+    </tr>
+    <tr>
+      <td>Geotérmica</td>
+      <td>Aprovecha calor natural sin combustibles fósiles</td>
+      <td>
+        <img src="imagenes/biogas.jpg" class="icon" alt="Plantas geotérmicas en Islandia">
+      </td>
+    </tr>
+  </tbody>
+</table>
+                        </div>
+
+                        <br>
+                        
+                    <div> 
+                        <div class="zoom-container">
+                            <img src="imagenes/R.png" class="icon" alt="Ciclo de la Biomasa">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <h3><center>hagamos el cambio para un mundo más sostenible</center></h3>
+            <p><center> El futuro de la humanidad depende de las decisiones que tomemos hoy. La transición hacia un modelo energético basado en fuentes renovables no es solo una alternativa tecnológica, sino una necesidad urgente para garantizar la supervivencia del planeta y mejorar la calidad de vida de las personas.Las energías renovables —solar, eólica, hidroeléctrica, geotérmica y biomasa— representan una oportunidad única para reducir nuestra dependencia de los combustibles fósiles, disminuir las emisiones de gases de efecto invernadero y frenar el avance del cambio climático. Cada panel solar instalado, cada turbina eólica que gira y cada proyecto hidroeléctrico sostenible son pasos concretos hacia un mundo más limpio y justo.</center></p> <br><br>
+        </main>
+    <h3><center>¡CONTACTANOS!</center></h3>
+    <footer class="footer" id="contacto">
+        <div class="dropdown">
+            <button class="dropbtn" aria-haspopup="true" aria-expanded="false">
+                <img src="imagenes/1255367.png" alt="mensaje" class="icon">
+                <center>CONTACTANOS</center>
+            </button>
+            <div class="dropdown-content" role="menu">
+                <a href="form.html">
+                    <img src="imagenes/gm.png" alt="gmail" class="icon">
+                    CORREO <br>
+                    ELECTRONICO
+                    <a href="https://www.instagram.com/oswld.420?igsh=dWkwenh1bGZ4bWQ0" target="_blank" rel="noopener noreferrer">
+                    <img src="imagenes/ig.jpg" alt="Instagram" class="icon">
+                    CREADOR
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal-overlay" id="topic-modal" aria-hidden="true">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modal-title"></h3>
+                <button class="modal-close" id="modal-close" aria-label="Cerrar">×</button>
+            </div>
+            <div class="modal-body">
+                <div id="modal-body"></div>
+                <iframe id="modal-iframe" class="modal-iframe" title="Contenido relacionado"></iframe>
+            </div>
+            <div class="modal-footer">
+                <a href="#" id="modal-link" class="modal-link" target="_blank">Ir a la página</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function navigateTo(page) {
+            window.location.href = page;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach((el, index) => {
+                el.style.animationDelay = `${index * 0.3}s`;
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                const loader = document.getElementById('loader-wrapper');
+                if (loader) loader.classList.add('hidden');
+            }, 4000);
+        });
+
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (navbar) {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            }
+        });
+
+        const mobileToggle = document.getElementById('mobile-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        let menuOverlay = document.querySelector('.menu-overlay');
+        if (!menuOverlay) {
+            menuOverlay = document.createElement('div');
+            menuOverlay.className = 'menu-overlay';
+            document.body.appendChild(menuOverlay);
+        }
+
+        function toggleMobileMenu() {
+            if (!navMenu || !menuOverlay) return;
+            const isActive = navMenu.classList.contains('active');
+            navMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+            document.body.style.overflow = !isActive ? 'hidden' : '';
+        }
+
+        function closeMobileMenu() {
+            if (!navMenu || !menuOverlay) return;
+            navMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        if (mobileToggle) {
+            mobileToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                toggleMobileMenu();
+            });
+        }
+
+        if (menuOverlay) {
+            menuOverlay.addEventListener('click', closeMobileMenu);
+        }
+
+        const navLinks = document.querySelectorAll('.nav-menu a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                if (targetSection) {
+                    const offsetTop = targetSection.offsetTop - 80;
+                    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                }
+                closeMobileMenu();
+            });
+        });
+
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0) scale(1)';
+                    entry.target.style.transition = 'opacity 0.8s cubic-bezier(0.25,0.1,0.25,1), transform 0.8s cubic-bezier(0.25,0.1,0.25,1)';
+                    entry.target.style.willChange = 'auto';
+                }
+            });
+        }, observerOptions);
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.info-card, .recycle-card, .benefit-item, .section h2, .section h3');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(50px) scale(0.95)';
+                card.style.transition = 'opacity 0.8s cubic-bezier(0.25,0.1,0.25,1), transform 0.8s cubic-bezier(0.25,0.1,0.25,1)';
+                card.style.transitionDelay = `${index * 0.1}s`;
+                card.style.willChange = 'transform, opacity';
+                card.style.backfaceVisibility = 'hidden';
+                card.style.webkitBackfaceVisibility = 'hidden';
+                observer.observe(card);
+            });
+
+            const heroContent = document.querySelector('.hero-content');
+            if (heroContent) {
+                heroContent.style.opacity = '0';
+                heroContent.style.transform = 'translateY(30px)';
+                heroContent.style.transition = 'opacity 1s ease, transform 1s ease';
+                setTimeout(() => {
+                    heroContent.style.opacity = '1';
+                    heroContent.style.transform = 'translateY(0)';
+                }, 500);
+            }
+
+            const contactDropdown = document.querySelector('#contacto .dropdown');
+            if (contactDropdown) {
+                const btn = contactDropdown.querySelector('.dropbtn');
+                const content = contactDropdown.querySelector('.dropdown-content');
+                if (btn && content) {
+                    btn.addEventListener('click', () => {
+                        contactDropdown.classList.toggle('open');
+                        const expanded = btn.getAttribute('aria-expanded') === 'true';
+                        btn.setAttribute('aria-expanded', (!expanded).toString());
+                    });
+                    document.addEventListener('click', (e) => {
+                        if (!contactDropdown.contains(e.target)) {
+                            contactDropdown.classList.remove('open');
+                            btn.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                }
+            }
+
+            const topicModal = document.getElementById('topic-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalBody = document.getElementById('modal-body');
+            const modalIframe = document.getElementById('modal-iframe');
+            const modalLink = document.getElementById('modal-link');
+            const modalClose = document.getElementById('modal-close');
+            const topics = {
+                prototipo: {
+                    titulo: 'Galería del prototipo',
+                    descripcion: 'Explora imágenes y detalles del prototipo construido para demostrar principios de generación y almacenamiento de energía renovable.',
+                },
+                eolica: {
+                    titulo: 'Energía eólica',
+                    descripcion: 'La energía eólica aprovecha el viento mediante aerogeneradores para producir electricidad limpia y renovable.',
+                },
+                solar: {
+                    titulo: 'Energía solar',
+                    descripcion: 'La energía solar convierte la radiación del sol en electricidad mediante paneles fotovoltaicos o calor mediante sistemas térmicos.',
+                },
+                hidroelectrica: {
+                    titulo: 'Energía hidroeléctrica',
+                    descripcion: 'La hidroeléctrica transforma la energía potencial del agua en electricidad usando presas y turbinas.',
+                },
+            };
+
+            function openModal(data) {
+                modalTitle.textContent = data.titulo || '';
+                modalBody.textContent = data.descripcion || '';
+                const href = data.href || '#';
+                modalLink.setAttribute('href', href);
+                if (modalIframe) {
+                    if (href.startsWith('#')) {
+                        const base = window.location.href.split('#')[0];
+                        modalIframe.src = base + href;
+                    } else {
+                        modalIframe.src = href;
+                    }
+                }
+                topicModal.classList.add('active');
+                topicModal.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeModal() {
+                topicModal.classList.remove('active');
+                topicModal.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+                if (modalIframe) modalIframe.src = 'about:blank';
+            }
+
+            modalClose.addEventListener('click', closeModal);
+            topicModal.addEventListener('click', (e) => {
+                if (e.target === topicModal) closeModal();
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeModal();
+            });
+
+            const topicButtons = document.querySelectorAll('.button-group .topic-btn');
+            topicButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const topicKey = btn.getAttribute('data-topic');
+                    const pageHref = btn.getAttribute('data-page') || '#';
+                    const info = topics[topicKey] || { titulo: 'Información', descripcion: 'Detalle no disponible.' };
+                    openModal({ ...info, href: pageHref });
+                });
+            });
+
+            modalLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                const href = modalLink.getAttribute('href') || '#';
+                closeModal();
+                if (href.startsWith('#')) {
+                    const targetSection = document.querySelector(href);
+                    if (targetSection) {
+                        const offsetTop = targetSection.offsetTop - 80;
+                        window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                    }
+                } else {
+                    window.location.assign(href);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

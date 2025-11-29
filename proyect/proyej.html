@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="imagenes/ixc.avif" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto</title>
+</head>
+<body> 
+  <style>
+     body {
+  margin: 0; 
+  display: flex;
+  flex-direction: column; 
+  min-height: 100vh; 
+  background-color: rgb(101, 238, 238);
+}
+
+.seccion-superior {
+  background-color: rgb(28, 158, 201);
+  height: 10vh; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+}
+.imagenes-flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content:space-around ;
+  gap: 20px;
+  }
+.container {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    125% 125% at -2% 101%,
+    rgba(245, 87, 2, 1) 10.5%,
+    rgba(245, 120, 2, 1) 16%,
+    rgba(245, 140, 2, 1) 17.5%,
+    rgba(245, 170, 100, 1) 25%,
+    rgb(135, 217, 240) 40%,
+    rgb(131, 154, 225) 65%,
+    rgb(14, 137, 214) 100%
+  );
+}
+.boton-regresar {
+  display: inline-block;
+  padding: 0.8rem 1.5rem;
+  position: relative;
+  z-index: 10;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  transition: background-color 0.3s ease;
+}
+
+.boton-regresar:hover {
+  background-color: #333333;
+}
+
+  </style>  
+  <!--introduccion-->
+</body>
+<body>
+  <div class="container">
+  <a href="index.html" class="boton-regresar">REGRESAR AL INICIO</a>
+     <div class="seccion-superior">
+    <h1>PROYECTO</h1>
+    <br> <br> <br>
+     </div>
+  <div style="margin-left: 100px; margin-right: 100px;">
+  <p style="text-align: center;"> <br> <br>  En este apartado se presentaran imagenes y videos sobre pruebas y funcionamiento del prototipo
+</div>
+</p> <br> <br>
+<!--IMAGENES-->
+<div class="imagenes-flex">
+  <figure>
+<img src="imagenes/WhatsApp Image 2025-11-27 at 8.05.09 PM.jpeg" alt="prototipo">
+<figcaption>procedimiento 1</figcaption>
+  </figure>
+  <figure>
+<img src="imagenes/WhatsApp Image 2025-11-27 at 8.05.18 PM (1).jpeg" alt="mi mascota">
+<figcaption>en esta imagen se hicieron cambios </figcaption>
+  </figure>
+  <figure>
+<img src="imagenes/WhatsApp Image 2025-11-27 at 8.05.18 PM (2).jpeg" alt="mi mascota">
+<figcaption>en esta imagen se hicieron pruebas</figcaption>
+  </figure>
+  <figure>
+<img src="imagenes/WhatsApp Image 2025-11-27 at 8.05.28 PM.jpeg" alt="mi familia">
+<figcaption>asi es un dinamo por dentro </figcaption>
+  </figure>
+     <figure>
+       <p>prueba 2 </p>
+  <video controls>
+    <source src="imagenes/WhatsApp Video 2025-11-27 at 8.05.18 PM.mp4" type="video/mp4">
+   </figure>
+  </video>
+   <figure>
+      <p>prueba 1</p>
+  <video controls>
+    <source src="imagenes/WhatsApp Video 2025-11-27 at 11.57.51 PM.mp4" type="video/mp4">
+  </video>
+  </figure>
+</div>
+</div>
+</div>
+</div>
+</body>
+</body>
+</html>
+  <style>
+    .imagenes-flex img, .imagenes-flex video {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+    .imagenes-flex figure {
+      flex: 1 1 240px;
+      min-width: 240px;
+    }
+    video { display: block; }
+  </style>

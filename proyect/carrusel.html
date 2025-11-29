@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="imagenes/ixc.avif" type="image/x-icon">
+  <title>proyecto</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+  html, body {
+    overflow-y: auto;
+    height: auto;
+  }
+}
+html { font-size:62.5%; }
+
+body { 
+  background-color:#fff;
+  font-family: Arial, sans-serif;
+  color: #fff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.slideshow {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  padding: 2rem;
+  padding-bottom: 240px;
+  transition: padding-bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+@media (max-width: 768px) {
+  .slideshow {
+    overflow-y: auto;
+    height: auto;
+    background-attachment: scroll;
+  }
+}
+
+.info-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  width: 100%;
+  max-width: 100%;
+  z-index: 1;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  min-height: 50vh;
+}
+
+.info-title {
+  font-size: 4rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.info-text {
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: #fff;
+}
+
+.carousel-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  padding: 2rem 3rem;
+  padding-top: 3.5rem;
+  box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: visible;
+}
+
+.carousel-container.collapsed {
+  transform: translateY(calc(100% - 60px));
+  max-height: 60px;
+  padding: 0.5rem 3rem;
+  padding-top: 0.5rem;
+  overflow: visible;
+}
+
+.carousel-container.collapsed .carousel-wrapper {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.3s ease, max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.carousel-wrapper {
+  width: 100%;
+  max-width: 1200px;
+  opacity: 1;
+  transition: opacity 0.3s ease 0.1s, max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.toggle-carousel-btn {
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffffff;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-bottom: none;
+  border-radius: 25px 25px 0 0;
+  padding: 0.8rem 2rem;
+  cursor: pointer;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #000;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+  z-index: 101;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+  min-width: 120px;
+  white-space: nowrap;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: all;
+}
+
+.toggle-carousel-btn:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: translateX(-50%) translateY(-3px);
+}
+
+.toggle-carousel-btn:active {
+  transform: translateX(-50%) translateY(-1px);
+}
+
+.toggle-carousel-btn .icon {
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.carousel-container.collapsed .toggle-carousel-btn .icon {
+  transform: rotate(180deg);
+}
+
+@media (max-width: 768px) {
+  .carousel-container {
+    position: fixed;
+    padding: 1rem 0.5rem;
+    padding-top: 3rem;
+    overflow: visible;
+  }
+  
+  .carousel-container.collapsed {
+    transform: translateY(calc(100% - 50px));
+    max-height: 50px;
+    padding: 0.5rem 0.5rem;
+    padding-top: 0.5rem;
+    overflow: visible;
+  }
+  
+  .toggle-carousel-btn {
+    top: -40px;
+    padding: 0.6rem 1.5rem;
+    font-size: 1.4rem;
+    min-width: 100px;
+    z-index: 101;
+    display: flex !important;
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  .toggle-carousel-btn .icon {
+    font-size: 1.5rem;
+  }
+}
+
+.carousel {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  height: 200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  user-select: none;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 1rem 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: pan-x;
+  will-change: transform;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.slide {
+  position: relative;
+  flex-shrink: 0;
+  border-radius: 15px;
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  width: 150px;
+  height: 150px;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.3s cubic-bezier(0.25,0.1,0.25,1), opacity 0.3s, outline 0.3s;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.slide:hover {
+  transform: scale(1.1);
+  outline: 3px solid rgba(255, 255, 255, 0.9);
+  z-index: 10;
+}
+
+.slide.active {
+  transform: scale(1.2);
+  outline: 3px solid #fff;
+  z-index: 10;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+}
+
+.arrow-controls {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  z-index: 15;
+  width: 100%;
+  max-width: 1200px;
+  pointer-events: none;
+  padding: 0;
+}
+
+.carousel-container.collapsed .arrow-controls {
+  display: none;
+}
+
+.arrow-controls .arrow {
+  pointer-events: all;
+  position: absolute;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.arrow.left {
+  left: 0.5rem;
+}
+
+.arrow.right {
+  right: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .arrow-controls {
+    gap: 0.5rem;
+    padding: 0 0.5rem;
+  }
+}
+
+.arrow {
+  font-size: 3rem;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background: rgba(255,255,255,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.arrow:hover {
+  background: rgba(255,255,255,1);
+}
+
+.arrow:active {
+  background: rgba(255,255,255,0.9);
+  transform: scale(0.95);
+}
+
+/* Solo aplicar hover en dispositivos que no son táctiles */
+@media (hover: hover) and (pointer: fine) {
+  .arrow:hover {
+    background: rgba(255,255,255,1);
+    transform: scale(1.05);
+  }
+}
+
+/* Media Queries para Responsividad Mejorada */
+
+/* Pantallas extra grandes */
+@media (min-width: 1400px) {
+  .slideshow {
+    padding: 3rem;
+    padding-bottom: 250px;
+  }
+  
+  .info-panel {
+    max-width: 100%;
+    padding: 3rem;
+  }
+  
+  .info-title {
+    font-size: 5rem;
+  }
+  
+  .info-text {
+    font-size: 1.8rem;
+  }
+  
+  .carousel {
+    height: 220px;
+  }
+  
+  .slide {
+    width: 180px;
+    height: 180px;
+  }
+}
+
+/* Laptops grandes y pantallas medianas */
+@media (max-width: 1200px) {
+  .slideshow {
+    padding: 2rem;
+    padding-bottom: 240px;
+  }
+  
+  .info-panel {
+    padding: 2rem;
+    max-width: 100%;
+  }
+  
+  .info-title {
+    font-size: 3.5rem;
+    word-wrap: break-word;
+  }
+  
+  .info-text {
+    font-size: 1.5rem;
+    word-wrap: break-word;
+  }
+  
+  .carousel {
+    height: 200px;
+  }
+  
+  .slide {
+    width: 160px;
+    height: 160px;
+  }
+  
+  .arrow {
+    font-size: 2.5rem;
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+}
+
+/* Tablets grandes y laptops pequeñas */
+@media (max-width: 1024px) {
+  .slideshow {
+    padding: 1.5rem;
+    padding-bottom: 230px;
+  }
+  
+  .info-panel {
+    padding: 1.5rem;
+    max-width: 100%;
+  }
+  
+  .info-title {
+    font-size: 3rem;
+    word-wrap: break-word;
+  }
+  
+  .info-text {
+    font-size: 1.4rem;
+    word-wrap: break-word;
+  }
+  
+  .carousel {
+    height: 180px;
+  }
+  
+  .slide {
+    width: 140px;
+    height: 140px;
+  }
+  
+  .arrow {
+    font-size: 2.2rem;
+    width: 3.2rem;
+    height: 3.2rem;
+  }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+  .slideshow {
+    flex-direction: column;
+    padding: 1rem;
+    padding-bottom: 220px;
+    justify-content: flex-start;
+    min-height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    gap: 1rem;
+  }
+  
+  .info-panel {
+    max-width: 100%;
+    padding: 1rem;
+    padding-top: 2rem;
+    text-align: center;
+    width: 100%;
+    flex-shrink: 0;
+  }
+  
+  .info-title {
+    font-size: 2.8rem;
+    margin-bottom: 1.5rem;
+    word-wrap: break-word;
+  }
+  
+  .info-text {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    max-width: 90%;
+    margin: 0 auto;
+    padding: 0 1rem;
+    word-wrap: break-word;
+  }
+  
+  .carousel-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 1rem 0.5rem;
+  }
+  
+  .carousel {
+    height: 160px;
+    gap: 1rem;
+  }
+  
+  .slide {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .arrow {
+    font-size: 2rem;
+    width: 3rem;
+    height: 3rem;
+  }
+}
+
+/* Móviles grandes */
+@media (max-width: 480px) {
+  .slideshow {
+    padding: 0.8rem;
+    padding-bottom: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  
+  .info-panel {
+    padding: 1rem;
+    padding-top: 1.5rem;
+  }
+  
+  .info-title {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .info-text {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    max-width: 95%;
+    padding: 0 1rem;
+  }
+  
+  .carousel-container {
+    position: fixed;
+    bottom: 0;
+    padding: 0.8rem 0.3rem;
+  }
+  
+  .carousel {
+    height: 140px;
+    gap: 0.8rem;
+  }
+  
+  .slide {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .arrow-controls {
+    gap: 0.5rem;
+    padding: 0 0.3rem;
+  }
+  
+  .arrow {
+    font-size: 1.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    min-width: 2.5rem;
+    min-height: 2.5rem;
+  }
+}
+
+/* Móviles medianos */
+@media (max-width: 375px) {
+  .slideshow {
+    padding: 0.5rem;
+    padding-bottom: 180px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  
+  .info-panel {
+    padding: 0.5rem;
+    padding-top: 1rem;
+  }
+  
+  .info-title {
+    font-size: 1.9rem;
+    word-wrap: break-word;
+  }
+  
+  .info-text {
+    font-size: 1rem;
+    padding: 0 0.5rem;
+  }
+  
+  .carousel-container {
+    position: fixed;
+    bottom: 0;
+    padding: 0.7rem 0.2rem;
+  }
+  
+  .carousel {
+    height: 120px;
+    gap: 0.6rem;
+  }
+  
+  .slide {
+    width: 90px;
+    height: 90px;
+  }
+  
+  .arrow-controls {
+    gap: 0.4rem;
+    padding: 0 0.2rem;
+  }
+  
+  .arrow {
+    font-size: 1.3rem;
+    width: 2.2rem;
+    height: 2.2rem;
+    min-width: 2.2rem;
+    min-height: 2.2rem;
+  }
+}
+
+/* Móviles pequeños */
+@media (max-width: 320px) {
+  .slideshow {
+    padding: 0.5rem;
+    padding-bottom: 170px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  
+  .info-panel {
+    padding: 0.5rem;
+  }
+  
+  .info-title {
+    font-size: 1.7rem;
+    word-wrap: break-word;
+  }
+  
+  .info-text {
+    font-size: 0.9rem;
+    padding: 0 0.5rem;
+  }
+  
+  .carousel-container {
+    position: fixed;
+    bottom: 0;
+    padding: 0.6rem 0.2rem;
+  }
+  
+  .carousel {
+    height: 110px;
+    gap: 0.5rem;
+  }
+  
+  .slide {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .arrow-controls {
+    gap: 0.3rem;
+    padding: 0 0.2rem;
+  }
+  
+  .arrow {
+    font-size: 1.1rem;
+    width: 2rem;
+    height: 2rem;
+    min-width: 2rem;
+    min-height: 2rem;
+  }
+}
+.absolute {
+  position: absolute;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.loader {
+  display: flex;
+  margin: 0.25em 0;
+  gap: 0.2em;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.w-2 {
+  width: 0.2em;
+}
+
+.dash {
+  animation: dashArray 2s ease-in-out infinite,
+    dashOffset 2s linear infinite;
+}
+
+.spin {
+  animation: spinDashArray 2s ease-in-out infinite,
+    spin 8s ease-in-out infinite,
+    dashOffset 2s linear infinite;
+  transform-origin: center;
+}
+
+@keyframes dashArray {
+  0% {
+    stroke-dasharray: 0 1 359 0;
+  }
+
+  50% {
+    stroke-dasharray: 0 359 1 0;
+  }
+
+  100% {
+    stroke-dasharray: 359 1 0 0;
+  }
+}
+
+@keyframes spinDashArray {
+  0% {
+    stroke-dasharray: 270 90;
+  }
+
+  50% {
+    stroke-dasharray: 0 360;
+  }
+
+  100% {
+    stroke-dasharray: 270 90;
+  }
+}
+
+@keyframes dashOffset {
+  0% {
+    stroke-dashoffset: 365;
+  }
+
+  100% {
+    stroke-dashoffset: 5;
+  }
+}
+
+@keyframes spin {
+  0% {
+    rotate: 0deg;
+  }
+
+  12.5%,
+  25% {
+    rotate: 270deg;
+  }
+
+  37.5%,
+  50% {
+    rotate: 540deg;
+  }
+
+  62.5%,
+  75% {
+    rotate: 810deg;
+  }
+
+  87.5%,
+  100% {
+    rotate: 1080deg;
+  }
+}
+#loader-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+#loader-wrapper.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Responsividad mejorada para el loader */
+@media (min-width: 1400px) {
+  .loader svg {
+    height: 56px !important;
+    width: 56px !important;
+  }
+}
+
+@media (max-width: 1200px) {
+  .loader svg {
+    height: 48px !important;
+    width: 48px !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  .loader svg {
+    height: 44px !important;
+    width: 44px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .loader svg {
+    height: 40px !important;
+    width: 40px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .loader svg {
+    height: 36px !important;
+    width: 36px !important;
+  }
+}
+
+@media (max-width: 375px) {
+  .loader svg {
+    height: 32px !important;
+    width: 32px !important;
+  }
+}
+
+@media (max-width: 320px) {
+  .loader svg {
+    height: 28px !important;
+    width: 28px !important;
+  }
+}
+
+  /* Contenido enriquecido para listas, tablas e imágenes en el panel */
+  .info-text, .info-extra {
+    text-align: left;
+    max-width: 1200px;
+  }
+  .info-extra ul {
+    margin: 1rem 0 1.5rem 2rem;
+    list-style: disc;
+  }
+  .info-extra ol {
+    margin: 1rem 0 1.5rem 2rem;
+  }
+  .info-extra table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0 2rem 0;
+    background: rgba(255,255,255,0.08);
+  }
+  .info-extra th, .info-extra td {
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 0.8rem;
+    font-size: 1.4rem;
+    vertical-align: top;
+  }
+  .info-extra th {
+    background: rgba(255,255,255,0.12);
+  }
+  .info-extra img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0.5rem 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+  }
+  .info-extra .media-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0 2rem 0;
+  }
+   embed.iframe-wrap {
+                width: 500px;
+  margin: 0.75rem auto;
+                padding-bottom: 80%;
+}
+
+  li{
+    font-size: 20px;
+    font-family: arial italic;
+  }
+  h3{
+    font-size: 20px;
+    font-family: fantasy;
+  }
+  </style>
+</head>
+<body>
+  <div class="slideshow" id="slideshow">
+    <div class="info-panel">
+      <div class="info-title" id="info-title">Título inicial</div>
+      <div class="info-text" id="info-text">Texto descriptivo de la imagen inicial.</div>
+      <div class="info-extra" id="info-extra"></div>
+    </div>
+    <div class="carousel-container" id="carousel-container">
+      <button class="toggle-carousel-btn" id="toggle-carousel-btn" aria-label="Toggle carrusel">
+        <span class="icon">▼</span>
+        <span class="text">Ocultar</span>
+      </button>
+      <div class="carousel-wrapper">
+        <div class="arrow-controls">
+          <button class="arrow left" aria-label="Anterior">&lt;</button>
+          <button class="arrow right" aria-label="Siguiente">&gt;</button>
+        </div>
+        <div class="carousel" id="carousel"></div>
+      </div>
+    </div>
+  </div>
+  <div id="loader-wrapper">
+<div class="loader">
+  <svg height="0" width="0" viewBox="0 0 64 64" class="absolute">
+    <defs class="s-xJBuHA073rTt" xmlns="http://www.w3.org/2000/svg">
+      <linearGradient class="s-xJBuHA073rTt" gradientUnits="userSpaceOnUse" y2="2" x2="0" y1="62" x1="0" id="b">
+        <stop class="s-xJBuHA073rTt" stop-color="#973BED"></stop>
+        <stop class="s-xJBuHA073rTt" stop-color="#007CFF" offset="1"></stop>
+      </linearGradient>
+      <linearGradient class="s-xJBuHA073rTt" gradientUnits="userSpaceOnUse" y2="0" x2="0" y1="64" x1="0" id="c">
+        <stop class="s-xJBuHA073rTt" stop-color="#FFC800"></stop>
+        <stop class="s-xJBuHA073rTt" stop-color="#F0F" offset="1"></stop>
+        <animateTransform repeatCount="indefinite" keySplines=".42,0,.58,1;.42,0,.58,1;.42,0,.58,1;.42,0,.58,1;.42,0,.58,1;.42,0,.58,1;.42,0,.58,1;.42,0,.58,1" keyTimes="0; 0.125; 0.25; 0.375; 0.5; 0.625; 0.75; 0.875; 1" dur="8s" values="0 32 32;-270 32 32;-270 32 32;-540 32 32;-540 32 32;-810 32 32;-810 32 32;-1080 32 32;-1080 32 32" type="rotate" attributeName="gradientTransform"></animateTransform>
+      </linearGradient>
+      <linearGradient class="s-xJBuHA073rTt" gradientUnits="userSpaceOnUse" y2="2" x2="0" y1="62" x1="0" id="d">
+        <stop class="s-xJBuHA073rTt" stop-color="#00E0ED"></stop>
+        <stop class="s-xJBuHA073rTt" stop-color="#00DA72" offset="1"></stop>
+      </linearGradient>
+      <linearGradient class="s-xJBuHA073rTt" gradientUnits="userSpaceOnUse" y2="2" x2="0" y1="62" x1="0" id="e">
+        <stop class="s-xJBuHA073rTt" stop-color="#FF6B6B"></stop>
+        <stop class="s-xJBuHA073rTt" stop-color="#4ECDC4" offset="1"></stop>
+      </linearGradient>
+      <linearGradient class="s-xJBuHA073rTt" gradientUnits="userSpaceOnUse" y2="2" x2="0" y1="62" x1="0" id="f">
+        <stop class="s-xJBuHA073rTt" stop-color="#45B7D1"></stop>
+        <stop class="s-xJBuHA073rTt" stop-color="#96CEB4" offset="1"></stop>
+      </linearGradient>
+      <linearGradient class="s-xJBuHA073rTt" gradientUnits="userSpaceOnUse" y2="2" x2="0" y1="62" x1="0" id="g">
+        <stop class="s-xJBuHA073rTt" stop-color="#F7DC6F"></stop>
+        <stop class="s-xJBuHA073rTt" stop-color="#BB8FCE" offset="1"></stop>
+      </linearGradient>
+      <linearGradient class="s-xJBuHA073rTt" gradientUnits="userSpaceOnUse" y2="2" x2="0" y1="62" x1="0" id="h">
+        <stop class="s-xJBuHA073rTt" stop-color="#85C1E9"></stop>
+        <stop class="s-xJBuHA073rTt" stop-color="#F8C471" offset="1"></stop>
+      </linearGradient>
+      <linearGradient class="s-xJBuHA073rTt" gradientUnits="userSpaceOnUse" y2="2" x2="0" y1="62" x1="0" id="i">
+        <stop class="s-xJBuHA073rTt" stop-color="#82E0AA"></stop>
+        <stop class="s-xJBuHA073rTt" stop-color="#F1948A" offset="1"></stop>
+      </linearGradient>
+      <linearGradient class="s-xJBuHA073rTt" gradientUnits="userSpaceOnUse" y2="2" x2="0" y1="62" x1="0" id="j">
+        <stop class="s-xJBuHA073rTt" stop-color="#D7BDE2"></stop>
+        <stop class="s-xJBuHA073rTt" stop-color="#AED6F1" offset="1"></stop>
+      </linearGradient>
+    </defs>
+  </svg>
+  <!-- E -->
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 64 64" height="48" width="48" class="inline-block">
+    <path stroke-linejoin="round" stroke-linecap="round" stroke-width="6" stroke="url(#b)" d="M 8 8 L 8 56 L 44 56 L 44 44 L 20 44 L 20 32 L 40 32 L 40 20 L 20 20 L 20 8 Z" class="dash" id="e1" pathLength="360"></path>
+  </svg>
+  <!-- N -->
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 64 64" height="48" width="48" class="inline-block">
+    <path stroke-linejoin="round" stroke-linecap="round" stroke-width="6" stroke="url(#c)" d="M 8 56 L 8 8 M 8 8 L 56 56 M 56 56 L 56 8" class="dash" id="n" pathLength="360"></path>
+  </svg>
+  <!-- E -->
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 64 64" height="48" width="48" class="inline-block">
+    <path stroke-linejoin="round" stroke-linecap="round" stroke-width="6" stroke="url(#d)" d="M 8 8 L 8 56 L 44 56 L 44 44 L 20 44 L 20 32 L 40 32 L 40 20 L 20 20 L 20 8 Z" class="dash" id="e2" pathLength="360"></path>
+  </svg>
+  <!-- R -->
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 64 64" height="48" width="48" class="inline-block">
+    <path stroke-linejoin="round" stroke-linecap="round" stroke-width="6" stroke="url(#e)" d="M 8 8 L 8 56 L 20 56 L 20 32 L 44 32 L 44 20 L 20 20 L 20 8 Z M 20 32 L 32 32 L 32 44 L 20 44 Z M 32 32 L 44 56" class="dash" id="r" pathLength="360"></path>
+  </svg>
+  <!-- G -->
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 64 64" height="48" width="48" class="inline-block">
+    <path stroke-linejoin="round" stroke-linecap="round" stroke-width="6" stroke="url(#f)" d="M 44 8 L 20 8 L 8 20 L 8 44 L 20 56 L 44 56 L 44 40 L 32 40" class="dash" id="g1" pathLength="360"></path>
+  </svg>
+  <!-- I -->
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 64 64" height="48" width="48" class="inline-block">
+    <path stroke-linejoin="round" stroke-linecap="round" stroke-width="6" stroke="url(#g)" d="M 32 8 L 32 56" class="dash" id="i1" pathLength="360"></path>
+  </svg>
+  <!-- A -->
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 64 64" height="48" width="48" class="inline-block">
+    <path stroke-linejoin="round" stroke-linecap="round" stroke-width="6" stroke="url(#h)" d="M 32 8 L 8 56 L 20 56 L 26 40 L 38 40 L 44 56 L 56 56 Z M 26 40 L 38 40" class="dash" id="a" pathLength="360"></path>
+  </svg>
+</div>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(() => {
+      const loader = document.getElementById("loader-wrapper");
+      loader.classList.add("hidden");
+    }, 2000); // 4000 milisegundos = 4 segundos
+  });
+    const slideImages = [
+  "imagenes/eolic.jpg",
+  "imagenes/eolic.jpg",
+  "imagenes/eolic.jpg",
+  "imagenes/eolic.jpg",
+  "imagenes/eolic.jpg",
+  "imagenes/eolic.jpg",
+  "imagenes/eolic.jpg"
+];
+
+const slideInfo = [
+  {
+    title: "proyecto energias renovables",
+    text: "Este proyecto tiene como objetivo promover el uso de las energias renovables y reducir la dependencia de los combustibles fósiles para generar energia de manera sostenible y limpia para el futuro de nuestras generaciones y el planeta Tierra, asi que como proyecto decidimos crear un mini generador eolico ",
+    extra: `
+      <h3>M A T E R I A L E S</h3>
+      <ul> 
+        <li>TAPAS</li>
+        <li>CAJA DE ZAPATOS </li>
+        <li>BASE DE MADERA DE 15CM X LADO</li>
+        <li>DINAMO</li>
+        <li>CUCHARAS DE PLASTICO</li>
+        <li>RUEDA DE BICICLETA PEQUENA</li>
+        <li>SILICON CALIENTE</li>
+        <li>CABLES DE CONEXION (POSITIVO Y NEGATIVO)</li>
+        <li>FOCO LED</li>
+        <li>SOPORTE DE MADERA PARA HELICE Y FOCO</li>
+      </ul>
+      <div class="media-row">
+        <img src="imagenes/prot.jpeg" alt="Prototipo">
+      </div>
+    `
+  },
+  {
+    title: "objetivos del proyecto",
+    text: "el objetivo principal de este proyecto es diseñar y construir un mini generador eolico funcional que pueda convertir la energia cinetica del viento en energia electrica utilizable, ademas de analizar su eficiencia y rendimiento bajo diferentes condiciones de viento para comprender mejor el potencial de la energia eolica como fuente renovable",
+    extra: ``
+  },
+
+  {
+    title: "MINI GENERADOR EOLICO",
+    text: "proyecto enfocado en la construccion y analisis de funcionamiento de un prototipo que genera energia renovable a partir del viento mediante una turbina eolica a pequeña escala",
+    extra: `
+      <h3>P R O C E D I M I E N T O</h3>
+      <ol>
+      <li>Base de madera: Se armó la base rectangular para proporcionar estabilidad.</li>
+      <li>Soportes verticales: Se fijaron dos soportes; izquierdo para motor y derecho para foco.</li>
+      <li>Fijación con silicón: Los soportes fueron asegurados con silicón caliente para garantizar firmeza.</li>
+      <li>Motor DC: Se colocó el motor en el soporte izquierdo.</li>
+      <li>Alineación del motor: Se verificó que quedara centrado y estable.</li>
+      <li>Hélice azul: Se instaló en el eje del motor.</li>
+      <li>Prueba de giro: Se comprobó giro libre sin fricción.
+      <li>Polaridad del motor: Conectar cable rojo al terminal positivo del módulo/circuito.</li>
+      <li>Retorno del motor: Conectar cable negro al terminal negativo.</li>
+      <li>Salida al LED: Unir la salida del circuito hacia el foco LED manteniendo polaridad correcta.</li>
+      <li>Asegurar conexiones: Usar silicón o cinta aislante para evitar falsos contactos.</li>
+      </ol>
+        <br> <br>
+        <h3>AJUSTES Y REVISION</h3>
+        <ol>
+      <li>Giro de hélice: Comprobar que la hélice gire sin obstrucciones.</li>
+      <li>Alineación del motor: Revisar que el motor esté bien alineado.</li>
+      <li>Gestión de cables: Asegurar que los cables estén bien conectados y sin contacto accidental.</li>
+    </ol>
+    <div class="media-row">
+        <img src="imagenes/WhatsApp Image 2025-11-27 at 8.05.18 PM (1).jpeg" alt="Proceso 1">
+      </div>
+    `
+  },
+   {
+    title: "Pruebas y análisis",
+    text: "Validación con ventilador y criterios de desempeño.",
+    extra: `
+      <ul>
+        <li>Prueba: aumentar flujo de aire progresivamente</li>
+        <li>Observar: encendido LED, intensidad, RPM, estabilidad</li>
+        <li>Criterios: LED enciende, energía constante, sin vibraciones</li>
+        <li>Análisis: motor genera electricidad; eficiencia según velocidad y alineación</li>
+        <li>Conclusión: se espera generación limpia y funcional</li>
+      </ul>
+    `
+  },
+  { title: "TABLA DE ENERGIA GENERADA", 
+  text: "Datos de energía generada",
+  extra: `<table>
+  <thead>
+    <tr>
+      <th>tiempo</th>
+      <th>voltaje</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>12.0</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>12.4</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>12.8</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>13.2</td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>13.6</td>
+    </tr>
+    <tr>
+      <td>25</td>
+      <td>14.0</td>
+    </tr>
+  </tbody>
+</table>
+
+      </table>` },
+  { title: "GRAFICA DE ENERGIA GENERADA", text: "", extra: `<img src="imagenes/cap.png" alt="Grafica de energia generada">` },
+  {
+    title: "comentarios",
+    text: "DEJA TU COMENTARIO",
+    extra: `
+      <div class="embed-iframe-wrap">
+        <iframe
+          src="http://localhost/comentarios/index.php"
+          style="height:500px;"
+          loading="lazy"
+        ></iframe>
+      </div>
+    `
+  }
+];
+
+const slideshow = document.getElementById("slideshow");
+const carousel = document.getElementById("carousel");
+const infoTitle = document.getElementById("info-title");
+const infoText = document.getElementById("info-text");
+const infoExtra = document.getElementById("info-extra");
+const carouselContainer = document.getElementById("carousel-container");
+const toggleCarouselBtn = document.getElementById("toggle-carousel-btn");
+
+// Ya no necesitamos calcular el tamaño del carrusel circular
+
+let currentSlide = 0;
+let isAnimating = false;
+let isButtonNavigation = false;
+
+const slides = slideImages.map(img => {
+  const div = document.createElement("div");
+  div.className = "slide";
+  div.style.backgroundImage = `url(${img})`;
+  carousel.appendChild(div);
+  return div;
+});
+
+function updateSlides() {
+  // Mostrar todas las slides en línea horizontal
+  slides.forEach((slide, i) => {
+    slide.style.display = "block";
+    slide.style.opacity = "1";
+    slide.classList.toggle("active", i === currentSlide);
+  });
+  
+  // Actualizar fondo y texto informativo
+  slideshow.style.backgroundImage = `url(${slideImages[currentSlide]})`;
+  infoTitle.innerHTML = slideInfo[currentSlide].title;
+  infoText.innerHTML = slideInfo[currentSlide].text;
+  infoExtra.innerHTML = slideInfo[currentSlide].extra || '';
+  
+  // Hacer scroll suave para centrar la slide activa solo si no estamos navegando con botones
+  if (!isButtonNavigation) {
+    const activeSlide = slides[currentSlide];
+    if (activeSlide && carousel) {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          const carouselRect = carousel.getBoundingClientRect();
+          const slideRect = activeSlide.getBoundingClientRect();
+          const slideLeftRelative = slideRect.left - carouselRect.left + carousel.scrollLeft;
+          const slideWidth = slideRect.width;
+          const carouselWidth = carouselRect.width;
+          const targetScroll = slideLeftRelative - (carouselWidth / 2) + (slideWidth / 2);
+          
+          carousel.scrollTo({
+            left: Math.max(0, targetScroll),
+            behavior: 'smooth'
+          });
+        });
+      });
+    }
+  }
+}
+
+function moveToSlide(target){
+  if(isAnimating) return;
+  isAnimating = true;
+  isButtonNavigation = true; // Activar bandera para ignorar eventos de scroll
+  
+  // Calcular el índice de la slide objetivo
+  const targetIndex = (target + slides.length) % slides.length;
+  currentSlide = targetIndex;
+  
+  // Actualizar las clases y contenido primero
+  slides.forEach((slide, i) => {
+    slide.classList.toggle("active", i === currentSlide);
+  });
+  slideshow.style.backgroundImage = `url(${slideImages[currentSlide]})`;
+  infoTitle.innerHTML = slideInfo[currentSlide].title;
+  infoText.innerHTML = slideInfo[currentSlide].text;
+  infoExtra.innerHTML = slideInfo[currentSlide].extra || '';
+  
+  // Luego hacer el scroll
+  const activeSlide = slides[currentSlide];
+  if (activeSlide && carousel) {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const carouselRect = carousel.getBoundingClientRect();
+        const slideRect = activeSlide.getBoundingClientRect();
+        const slideLeftRelative = slideRect.left - carouselRect.left + carousel.scrollLeft;
+        const slideWidth = slideRect.width;
+        const carouselWidth = carouselRect.width;
+        const targetScroll = slideLeftRelative - (carouselWidth / 2) + (slideWidth / 2);
+        
+        carousel.scrollTo({
+          left: Math.max(0, targetScroll),
+          behavior: 'smooth'
+        });
+      });
+    });
+  }
+  
+  // Desactivar flags después de que termine la animación
+  setTimeout(() => {
+    isAnimating = false;
+    // Esperar un poco más para asegurar que el scroll haya terminado
+    setTimeout(() => {
+      isButtonNavigation = false;
+    }, 200);
+  }, 800);
+}
+
+// El arrastre ahora se maneja con el scroll nativo del carousel
+// Detectamos cuando el usuario termina de hacer scroll para actualizar la slide activa
+let scrollTimeout;
+carousel.addEventListener('scroll', () => {
+  // Ignorar eventos de scroll cuando estamos navegando con botones
+  if (isButtonNavigation) return;
+  
+  clearTimeout(scrollTimeout);
+  scrollTimeout = setTimeout(() => {
+    // Encontrar la slide más cercana al centro
+    const carouselRect = carousel.getBoundingClientRect();
+    const centerX = carouselRect.left + carouselRect.width / 2;
+    
+    let closestSlide = 0;
+    let closestDistance = Infinity;
+    
+    slides.forEach((slide, index) => {
+      const slideRect = slide.getBoundingClientRect();
+      const slideCenterX = slideRect.left + slideRect.width / 2;
+      const distance = Math.abs(slideCenterX - centerX);
+      
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestSlide = index;
+      }
+    });
+    
+    if (closestSlide !== currentSlide) {
+      currentSlide = closestSlide;
+      // Solo actualizar el fondo y texto, no hacer scroll
+      slideshow.style.backgroundImage = `url(${slideImages[currentSlide]})`;
+      infoTitle.innerHTML = slideInfo[currentSlide].title;
+      infoText.innerHTML = slideInfo[currentSlide].text;
+      infoExtra.innerHTML = slideInfo[currentSlide].extra || '';
+      
+      // Actualizar clases active
+      slides.forEach((slide, i) => {
+        slide.classList.toggle("active", i === currentSlide);
+      });
+    }
+  }, 150);
+});
+
+const leftArrow = document.querySelector(".arrow.left");
+const rightArrow = document.querySelector(".arrow.right");
+
+leftArrow.addEventListener("click", (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  const prevSlide = (currentSlide - 1 + slides.length) % slides.length;
+  moveToSlide(prevSlide);
+});
+
+rightArrow.addEventListener("click", (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  const nextSlide = (currentSlide + 1) % slides.length;
+  moveToSlide(nextSlide);
+});
+                    
+// Funcionalidad para colapsar/expandir el carrusel
+let isCarouselExpanded = true;
+
+function updateSlideshowPadding() {
+  const width = window.innerWidth;
+  let paddingBottom;
+  
+  if (isCarouselExpanded) {
+    // Padding cuando está expandido (valores originales según media queries)
+    if (width <= 320) {
+      paddingBottom = '170px';
+    } else if (width <= 375) {
+      paddingBottom = '180px';
+    } else if (width <= 480) {
+      paddingBottom = '200px';
+    } else if (width <= 768) {
+      paddingBottom = '220px';
+    } else if (width <= 1024) {
+      paddingBottom = '230px';
+    } else if (width <= 1200) {
+      paddingBottom = '240px';
+    } else if (width <= 1400) {
+      paddingBottom = '240px';
+    } else {
+      paddingBottom = '250px';
+    }
+  } else {
+    // Padding cuando está colapsado
+    if (width <= 480) {
+      paddingBottom = '60px';
+    } else {
+      paddingBottom = '80px';
+    }
+  }
+  
+  slideshow.style.paddingBottom = paddingBottom;
+}
+
+toggleCarouselBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  isCarouselExpanded = !isCarouselExpanded;
+  
+  if (isCarouselExpanded) {
+    carouselContainer.classList.remove('collapsed');
+    toggleCarouselBtn.querySelector('.text').textContent = 'Ocultar';
+  } else {
+    carouselContainer.classList.add('collapsed');
+    toggleCarouselBtn.querySelector('.text').textContent = 'Mostrar';
+  }
+  
+  updateSlideshowPadding();
+});
+
+// Permitir clic en las slides para cambiar
+slides.forEach((slide, index) => {
+  slide.addEventListener('click', () => {
+    moveToSlide(index);
+  });
+});
+
+updateSlides();
+
+// Ajustar padding inicial
+updateSlideshowPadding();
+
+// Event listener para redimensionar ventana
+let resizeTimeout;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimeout);
+  resizeTimeout = setTimeout(() => {
+    updateSlideshowPadding();
+    updateSlides();
+  }, 150);
+});
+
+  </script>
+</body>
+</html>

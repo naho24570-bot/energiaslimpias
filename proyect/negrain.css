@@ -1,0 +1,122 @@
+/* FULL MODIFICATION WITH RGB, LOADING BAR, GRADIENT TITLE, RGB GALLERY, AND ANIMATED BACKGROUND */
+
+/* ====== GLOBAL ====== */
+:root{
+    --rgb1: #ff005e;
+    --rgb2: #00e1ff;
+    --rgb3: #7b2cff;
+    --bg1: #0f0c29;
+    --bg2: #3daae4;
+    --bg3: #24243e;
+  }
+  
+  body{
+    font-family: Arial;
+    background: linear-gradient(125deg, var(--bg1), var(--bg2), var(--bg3));
+    background-size: 300% 300%;
+    animation: fondoAnimado 13s infinite ease alternate;
+    color:white;
+  }
+  
+  @keyframes fondoAnimado{
+    0%{background-position:0% 50%;}
+    100%{background-position:100% 50%;}
+  }
+  
+  /* ====== GRADIENT TITLE LETTER BY LETTER ====== */
+  .gradient-title span{
+    background: linear-gradient(90deg, var(--rgb1), var(--rgb2), var(--rgb3));
+    -webkit-animation-clip: text;
+    color: transparent;
+    display: inline-block;
+    animation: titleFlow 3s infinite linear;
+  }
+  
+  @keyframes titleFlow{
+    0%{filter:hue-rotate(0deg);}
+    100%{filter:hue-rotate(360deg);}
+  }
+  
+  /* ====== RGB GALLERY EFFECT ======*/
+  .rgb-card{
+    position:relative;
+    border-radius:14px;
+    overflow:hidden;
+  }
+  
+  .rgb-card::before{
+    content:"";
+    position:absolute;
+    inset:-3px;
+    background: linear-gradient(130deg, var(--rgb1), var(--rgb2), var(--rgb3));
+    background-size:300% 300%;
+    animation: rgbBorder 5s infinite linear;
+    z-index:0;
+    border-radius:inherit;
+  }
+  
+  .rgb-card>*{
+    position:relative;
+    z-index:2;
+    background:#111;
+    padding:1rem;
+    border-radius:inherit;
+  }
+  
+  @keyframes rgbBorder{
+    0%{background-position:0% 50%;}
+    100%{background-position:100% 50%;}
+  }
+  
+  /* ====== CLICK LOADING BAR ======*/
+  a, img{
+    position:relative;
+  }
+  
+  a:active::after, img:active::after{
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:-3px;
+    width:100%;
+    height:3px;
+    background:linear-gradient(90deg, var(--rgb1), var(--rgb2), var(--rgb3));
+    animation: loadingBar .4s linear;
+  }
+  
+  @keyframes loadingBar{
+    0%{transform:scaleX(0);}
+    100%{transform:scaleX(1);}
+  }
+  
+  /* ====== IMPROVED HERO ======*/
+  .hero{
+    background-attachment:fixed;
+    filter: drop-shadow(0 0 20px #000);
+  }
+  
+  .hero h1{
+    font-size:3rem;
+  }
+  
+  .hero p{
+    color:#e3e3e3;
+  }
+  
+  /* ===== GENERAL CARDS WITH DARK MODE =====*/
+  .card, .info-card, .recycle-card{
+    background:#154ba950 !important;
+    color:white !important;
+    box-shadow:0 0 20px rgba(0,0,0,.6);
+  }
+  
+  .info-card img, .recycle-card img{
+    border-radius:12px;
+  }
+  
+  /* FOOTER */
+  .footer{
+    background:#000A;
+    color:white;
+    border-top:2px solid var(--rgb2);
+  }
